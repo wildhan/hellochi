@@ -8,11 +8,10 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o /hellochi
+# Build dengan static linking
+RUN CGO_ENABLED=0 GOOS=linux go build -o /hellochi
 
-FROM debian:bullseye-slim
-
-WORKDIR /
+FROM scratch
 
 COPY --from=build /hellochi /hellochi
 
